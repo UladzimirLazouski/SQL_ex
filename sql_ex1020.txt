@@ -1,0 +1,55 @@
+10.
+SELECT model, price
+FROM Printer
+WHERE price=(SELECT MAX(price)
+FROM Printer)
+11.
+SELECT AVG(speed)
+From PC
+12.
+SELECT AVG(speed)
+FROM Laptop
+WHERE price >1000
+13.
+SELECT AVG(PC.speed)
+FROM PC, Product
+WHERE PC.model=Product.model AND Product.maker='a'
+14.
+SELECT Classes.class, Ships.name, Classes.country
+FROM Ships
+INNER JOIN Classes ON numGuns>=10
+WHERE Classes.class=Ships.class
+15.
+SELECT hd
+FROM PC
+GROUP BY hd
+HAVING COUNT(hd)>1
+16.
+SELECT DISTINCT a.model, b.model, a.speed, a.ram
+FROM PC a, PC b
+WHERE (a.ram=b.ram) and (a.speed=b.speed) and (a.model>b.model)
+17.
+SELECT DISTINCT Product.type, Product.model, Laptop.speed
+FROM Product 
+INNER JOIN Laptop ON Laptop.speed < ALL (SELECT speed FROM PC)
+WHERE Laptop.model = Product.model AND Product.type='Laptop'
+18.
+SELECT DISTINCT  Product.maker, Printer.price 
+FROM Printer  
+INNER JOIN Product ON Product.type='Printer'
+WHERE Printer.price = (SELECT MIN(price) FROM Printer WHERE color='y') AND Product.model=Printer.model AND Printer.color='y'
+19.
+SELECT Product.maker, AVG(Laptop.screen) 
+FROM Product 
+INNER JOIN Laptop ON Product.model=Laptop.model
+WHERE Product.type='Laptop'
+GROUP BY Product.maker
+20.
+SELECT Product.maker, COUNT(Product.model) AS COUNT_model 
+FROM Product 
+WHERE Product.type='PC'
+GROUP BY Product.maker
+HAVING COUNT(Product.model)>2
+
+
+
